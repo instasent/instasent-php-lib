@@ -1,0 +1,28 @@
+{
+  "name": "instasent/instasent-php-lib",
+  "type": "library",
+  "description": "A PHP wrapper for Instasent's API",
+  "keywords": ["instasent", "sms", "lookup", "api"],
+  "homepage": "http://github.com/instasent/instasent-php-lib",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marcos Gómez",
+      "email": "marcos@instasent.com"
+    },
+    {
+      "name": "Luis Hdez",
+      "email": "luis@instasent.com"
+    },
+    {
+      "name": "Senén Hermida",
+      "email": "senen@instasent.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.1"
+  },
+  "autoload": {
+    "psr-4": {"Instasent\\": "src/Instasent"}
+  }
+}
