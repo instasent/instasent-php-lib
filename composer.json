@@ -1,7 +1,7 @@
 {
   "name": "instasent/instasent-php-lib",
   "type": "library",
-  "description": "A PHP wrapper for Instasent's API",
+  "description": "A PHP wrapper library for Instasent's API",
   "keywords": ["instasent", "sms", "lookup", "api"],
   "homepage": "http://github.com/instasent/instasent-php-lib",
   "license": "MIT",
