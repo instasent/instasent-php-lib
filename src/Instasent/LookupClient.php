@@ -1,0 +1,61 @@
+<?php
+
+/*
+ * This file is part of the Instasent PHP Library.
+ *
+ * (c) Instasent <app@instasent.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Instasent;
+
+use Instasent\Abstracts\InstasentClient;
+
+class LookupClient extends InstasentClient
+{
+
+    /**
+     * Do a lookup to get number info
+     * @param  string $to       Recipient where lookup is requested
+     *
+     * @return array
+     */
+    public function doLookup($to)
+    {
+        $url = ($this->useSecureChannel) ? $this->secureChannel.'/lookup/' : $this->rootEndpoint.'/lookup/';
+        $httpMethod = 'POST';
+        $data = array('to' => $to);
+        
+        return $this->execRequest($url, $httpMethod, $data);
+    }
+
+    /**
+     * Get a lookup by id
+     * @param  string $id
+     *
+     * @return array
+     */
+    public function getLookupById($id)
+    {
+        $url = ($this->useSecureChannel) ? $this->secureChannel.'/lookup/'.$id : $this->rootEndpoint.'/lookup/'.$id;
+        $httpMethod = 'GET';
+        return $this->execRequest($url, $httpMethod, array());
+    }
+
+    /**
+     * Get all lookups. Filter by page and resultes per page.
+     * @param  integer $page 
+     * @param  integer $perPage
+     *
+     * @return array
+     */
+    public function getLookups($page = 1, $perPage = 10)
+    {
+        $query = http_build_query(array('page' => $page, 'per_page' => $perPage));
+        $url = ($this->useSecureChannel) ? $this->secureChannel.'/lookup/?'.$query : $this->rootEndpoint.'/lookup/?'.$query;
+        $httpMethod = 'GET';
+        return $this->execRequest($url, $httpMethod, array());
+    }
+}
