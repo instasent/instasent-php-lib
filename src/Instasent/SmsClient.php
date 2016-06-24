@@ -11,7 +11,7 @@
 
 namespace Instasent;
 
-class InstasentClient
+class SmsClient
 {
     /**
      * [$rootEndpoint description]
