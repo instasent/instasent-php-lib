@@ -37,6 +37,26 @@ class SmsClient extends InstasentClient
     }
 
     /**
+     * Send a sms
+     * @param  string $from     Remittent, 11chars max
+     * @param  string $to       Recipient where SMS is delivered, Include the country phone prefix format E164
+     * @param  string $text     Message text content, 160 chars per SMS
+     * @param  string $clientId An user reference for your internal use, Optional - 40chars max, Unique per SMS
+     *
+     * @return array
+     */
+    public function sendBulkSms($messages, $clientId = null)
+    {
+        $url = ($this->useSecureChannel) ? $this->secureChannel.'/sms/bulk/' : $this->rootEndpoint.'/sms/bulk/';
+        $httpMethod = 'POST';
+
+        if ($clientId) {
+            $data['clientId'] = $clientId;
+        }
+        return $this->execRequest($url, $httpMethod, $messages);
+    }
+
+    /**
      * Get Sms by entity Id
      * @param  string $id
      *
