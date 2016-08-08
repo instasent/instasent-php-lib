@@ -15,35 +15,35 @@ abstract class InstasentClient
 {
     /**
      * Endpoint URL
-     * 
+     *
      * @var string
      */
-    protected $rootEndpoint = 'http://api.instasent.com';
+    protected $rootEndpoint = 'http://api.instasent.codes';
 
     /**
      * Secure Channel URL
-     * 
+     *
      * @var string
      */
-    protected $secureChannel = 'https://api.instasent.com';
+    protected $secureChannel = 'http://api.instasent.codes';
 
     /**
      * Api Token
-     * 
+     *
      * @var string
      */
     protected $token;
 
     /**
      * Use secure channel flag
-     * 
+     *
      * @var boolean
      */
     protected $useSecureChannel = true;
 
     /**
      * InstasentClient constructor.
-     * 
+     *
      * @param $token
      * @param bool $useSecureChannel
      */
@@ -55,7 +55,7 @@ abstract class InstasentClient
 
     /**
      * Execute the request using curl
-     * 
+     *
      * @param  string $url
      * @param  string $httpMethod
      * @param  string $data
@@ -67,6 +67,7 @@ abstract class InstasentClient
         $curl = curl_init();
         $headers = array(
             'Authorization: Bearer '.$this->token,
+            'Accept: application/json',
         );
 
         curl_setopt($curl,CURLOPT_URL, $url);
