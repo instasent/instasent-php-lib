@@ -18,14 +18,14 @@ abstract class InstasentClient
      *
      * @var string
      */
-    protected $rootEndpoint = 'http://api.instasent.codes';
+    protected $rootEndpoint = 'http://api.instasent.com';
 
     /**
      * Secure Channel URL
      *
      * @var string
      */
-    protected $secureChannel = 'http://api.instasent.codes';
+    protected $secureChannel = 'http://api.instasent.com';
 
     /**
      * Api Token
