@@ -37,7 +37,7 @@ You can check 'examples/send-sms.php' file.
 
 require __DIR__  . '/../vendor/autoload.php';
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->sendSms("test", "+34647000000", "test message");
 
 echo $response["response_code"];
@@ -49,9 +49,10 @@ echo $response["response_body"];
 ```php
 <?php
 
-require_once(__DIR__ . '/path/to/lib/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/SmsClient.php');
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->sendSms("test", "+34647000000", "test message");
 
 echo $response["response_code"];
@@ -66,7 +67,7 @@ echo $response["response_body"];
 
 require __DIR__  . '/../vendor/autoload.php';
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->getSmsById("smsId");
 
 echo $response["response_code"];
@@ -77,9 +78,10 @@ echo $response["response_body"];
 
 ```php
 
-require_once(__DIR__ . '/path/to/lib/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/SmsClient.php');
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->getSmsById("smsId");
 
 echo $response["response_code"];
