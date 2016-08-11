@@ -20,7 +20,8 @@ composer require "instasent/instasent-php-lib"
 Once you download the library, move the instasent-php-lib folder to your project
 directory and then include the library file:
 
-    require '/path/to/instasent-php-lib/src/Instasent/InstasentClient.php';
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/SmsClient.php');
 
 and now you can use it!
 
