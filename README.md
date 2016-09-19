@@ -31,7 +31,7 @@ and now you can use it!
 
 ### Send an SMS
 
-You can check 'examples/send-sms.php' file.
+You can check 'examples/send-sms.php' or 'examples/send-sms-unicode.php' file.
 
 #### Composer way
 
@@ -60,6 +60,60 @@ $response = $instasentClient->sendSms("test", "+34647000000", "test message");
 
 echo $response["response_code"];
 echo $response["response_body"];
+```
+
+If you want to send an Unicode SMS (i.e with 😀 emoji) you only need to replace sendSms method with sendUnicodeSms:
+
+```php
+$response = $instasentClient->sendUnicodeSms("test", "+34647000000", "Unicode test: ña éáíóú 😀");
+```
+
+### Send multiple SMS
+
+You can check 'examples/send-bulk-sms.php' or 'examples/send-bulk-sms-unicode.php' file.
+
+#### Composer way
+
+```php
+<?php
+
+require __DIR__  . '/../vendor/autoload.php';
+
+$instasentClient = new Instasent\SmsClient("my-token");
+$messages = null;
+for ($i=0; $i<100; $i++) {
+    $messages[] = ["from" => "test", "to" => "+34647000000", "text" => "test multi"];
+}
+
+$response = $instasentClient->sendBulkSms($messages);
+```
+
+#### Direct way
+
+```php
+<?php
+
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/SmsClient.php');
+
+$instasentClient = new Instasent\SmsClient("my-token");
+$messages = null;
+for ($i=0; $i<100; $i++) {
+    $messages[] = ["from" => "test", "to" => "+34647000000", "text" => "test multi"];
+}
+
+$response = $instasentClient->sendBulkSms($messages);
+
+echo $response["response_code"];
+echo $response["response_body"];
+```
+
+If you want to send an Unicode Bulk SMS (i.e with 😀 emoji) you only need to add 'allowUnicode' => true to array
+
+```php
+for ($i=0; $i<100; $i++) {
+    $messages[] = ["allowUnicode" => true, "from" => "test", "to" => "+34647000000", "text" => "Unicode test: ña éáíóú 😀"];
+}
 ```
 
 ### Get SMS Info
