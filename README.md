@@ -20,11 +20,14 @@ composer require "instasent/instasent-php-lib"
 Once you download the library, move the instasent-php-lib folder to your project
 directory and then include the library file:
 
-    require '/path/to/instasent-php-lib/src/Instasent/InstasentClient.php';
+```
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/SmsClient.php');
+```
 
 and now you can use it!
 
-## Quickstart
+## SMS
 
 ### Send an SMS
 
@@ -37,7 +40,7 @@ You can check 'examples/send-sms.php' file.
 
 require __DIR__  . '/../vendor/autoload.php';
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->sendSms("test", "+34647000000", "test message");
 
 echo $response["response_code"];
@@ -49,9 +52,10 @@ echo $response["response_body"];
 ```php
 <?php
 
-require_once(__DIR__ . '/path/to/lib/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/SmsClient.php');
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->sendSms("test", "+34647000000", "test message");
 
 echo $response["response_code"];
@@ -66,7 +70,7 @@ echo $response["response_body"];
 
 require __DIR__  . '/../vendor/autoload.php';
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->getSmsById("smsId");
 
 echo $response["response_code"];
@@ -77,13 +81,121 @@ echo $response["response_body"];
 
 ```php
 
-require_once(__DIR__ . '/path/to/lib/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/SmsClient.php');
 
-$instasentClient = new Instasent\InstasentClient("my-token");
+$instasentClient = new Instasent\SmsClient("my-token");
 $response = $instasentClient->getSmsById("smsId");
 
 echo $response["response_code"];
 echo $response["response_body"];
+```
+
+## Lookup
+
+### Do a Lookup
+
+#### Composer way
+
+```php
+
+require __DIR__  . '/../vendor/autoload.php';
+
+$instasentClient = new Instasent\LookupClient("my-token");
+$response = $instasentClient->doLookup("+34666000000");
+
+echo $response["response_code"];
+echo $response["response_body"];
+```
+
+#### Direct way
+
+```php
+
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/LookupClient.php');
+
+$instasentClient = new Instasent\LookupClient("my-token");
+$response = $instasentClient->doLookup("+34666000000");
+
+echo $response["response_code"];
+echo $response["response_body"];
+```
+
+### Verify
+
+To do a verify workflow, first you need to request a verify code.
+
+### Request Verify
+
+#### Composer way
+
+```php
+
+require __DIR__  . '/../vendor/autoload.php';
+
+$instasentClient = new Instasent\VerifyClient("my-token");
+$response = $instasentClient->requestVerify("test", "+34647000000", "Your code is %token%", 6, 300);
+
+echo $response["response_code"];
+echo $response["response_body"];
+```
+
+#### Direct way
+
+```php
+
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/VerifyClient.php');
+
+$instasentClient = new Instasent\VerifyClient("my-token");
+$response = $instasentClient->requestVerify("test", "+34647000000", "Your code is %token%", 6, 300);
+
+echo $response["response_code"];
+echo $response["response_body"];
+```
+
+Then you need to check if verify code entered by your client is correct.
+
+### Check Verify
+
+#### Composer way
+
+```php
+
+require __DIR__  . '/../vendor/autoload.php';
+
+$instasentClient = new Instasent\VerifyClient("my-token");
+$response = $instasentClient->checkVerify($requestVerifyId, $token);
+
+$response_body = json_decode($response["response_body"]);
+$status = $response_body->entity->status;
+
+if ($status == 'verified') {
+    echo "Hooorray!! You are verified!";
+} else {
+    echo "Verified status is: ".$status;
+}
+```
+
+#### Direct way
+
+```php
+
+require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
+require_once(__DIR__ . '/path/to/lib/VerifyClient.php');
+
+$instasentClient = new Instasent\VerifyClient("my-token");
+$response = $instasentClient->checkVerify($requestVerifyId, $token);
+
+$response_body = json_decode($response["response_body"]);
+$status = $response_body->entity->status;
+
+if ($status == 'verified') {
+    echo "Hooorray!! You are verified!";
+} else {
+    echo "Verified status is: ".$status;
+}
 ```
 
 ## [Full Documentation](http://docs.instasent.com/)
