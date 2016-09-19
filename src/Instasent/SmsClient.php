@@ -37,6 +37,26 @@ class SmsClient extends InstasentClient
     }
 
     /**
+     * Send an unicode sms
+     * @param  string $from     Remittent, 11chars max
+     * @param  string $to       Recipient where SMS is delivered, Include the country phone prefix format E164
+     * @param  string $text     Message text content, 160 chars per SMS
+     * @param  string $clientId An user reference for your internal use, Optional - 40chars max, Unique per SMS
+     *
+     * @return array
+     */
+    public function sendUnicodeSms($from, $to, $text, $clientId = null)
+    {
+        $url = ($this->useSecureChannel) ? $this->secureChannel.'/sms/' : $this->rootEndpoint.'/sms/';
+        $httpMethod = 'POST';
+        $data = array('allowUnicode' => true, 'from' => $from, 'to' => $to, 'text' => $text);
+        if ($clientId) {
+            $data['clientId'] = $clientId;
+        }
+        return $this->execRequest($url, $httpMethod, $data);
+    }
+
+    /**
      * Send a sms
      * @param  string $from     Remittent, 11chars max
      * @param  string $to       Recipient where SMS is delivered, Include the country phone prefix format E164
