@@ -29,7 +29,7 @@ class VerifyClient extends InstasentClient
      */
     public function requestVerify($from, $to, $text, $tokenLength = null, $timeout = null, $clientId = null)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/verify/' : $this->rootEndpoint.'/verify/';
+        $url = $this->secureChannel.'/verify/';
         $httpMethod = 'POST';
         $data = array('sms' => array('from' => $from, 'to' => $to, 'text' => $text));
 
@@ -58,7 +58,7 @@ class VerifyClient extends InstasentClient
      */
     public function checkVerify($id, $token)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/verify/'.$id : $this->rootEndpoint.'/verify/'.$id;
+        $url = $this->secureChannel.'/verify/'.$id;
         $url .= '?token='.$token;
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
@@ -72,7 +72,7 @@ class VerifyClient extends InstasentClient
      */
     public function getVerifyById($id)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/verify/'.$id : $this->rootEndpoint.'/verify/'.$id;
+        $url = $this->secureChannel.'/verify/'.$id;
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
     }
@@ -87,7 +87,7 @@ class VerifyClient extends InstasentClient
     public function getVerify($page = 1, $perPage = 10)
     {
         $query = http_build_query(array('page' => $page, 'per_page' => $perPage));
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/verify/?'.$query : $this->rootEndpoint.'/verify/?'.$query;
+        $url = $this->secureChannel.'/verify/?'.$query;
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
     }

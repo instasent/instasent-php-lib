@@ -13,19 +13,13 @@ namespace Instasent\Abstracts;
 
 abstract class InstasentClient
 {
-    /**
-     * Endpoint URL
-     *
-     * @var string
-     */
-    protected $rootEndpoint = 'http://api.instasent.com';
 
     /**
      * Secure Channel URL
      *
      * @var string
      */
-    protected $secureChannel = 'http://api.instasent.com';
+    protected $secureChannel = 'https://api.instasent.com';
 
     /**
      * Api Token
@@ -35,22 +29,14 @@ abstract class InstasentClient
     protected $token;
 
     /**
-     * Use secure channel flag
-     *
-     * @var boolean
-     */
-    protected $useSecureChannel = true;
-
-    /**
      * InstasentClient constructor.
      *
      * @param $token
      * @param bool $useSecureChannel
      */
-    public function __construct($token, $useSecureChannel = true)
+    public function __construct($token)
     {
         $this->token = $token;
-        $this->useSecureChannel = $useSecureChannel;
     }
 
     /**

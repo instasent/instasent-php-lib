@@ -27,7 +27,7 @@ class SmsClient extends InstasentClient
      */
     public function sendSms($from, $to, $text, $clientId = null)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/sms/' : $this->rootEndpoint.'/sms/';
+        $url = $this->secureChannel.'/sms/';
         $httpMethod = 'POST';
         $data = array('from' => $from, 'to' => $to, 'text' => $text);
         if ($clientId) {
@@ -47,7 +47,7 @@ class SmsClient extends InstasentClient
      */
     public function sendUnicodeSms($from, $to, $text, $clientId = null)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/sms/' : $this->rootEndpoint.'/sms/';
+        $url = $this->secureChannel.'/sms/';
         $httpMethod = 'POST';
         $data = array('allowUnicode' => true, 'from' => $from, 'to' => $to, 'text' => $text);
         if ($clientId) {
@@ -67,7 +67,7 @@ class SmsClient extends InstasentClient
      */
     public function sendBulkSms($messages, $clientId = null)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/sms/bulk/' : $this->rootEndpoint.'/sms/bulk/';
+        $url = $this->secureChannel.'/sms/bulk/';
         $httpMethod = 'POST';
 
         if ($clientId) {
@@ -84,7 +84,7 @@ class SmsClient extends InstasentClient
      */
     public function getSmsById($id)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/sms/'.$id : $this->rootEndpoint.'/sms/'.$id;
+        $url = $this->secureChannel.'/sms/'.$id;
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
     }
@@ -99,7 +99,7 @@ class SmsClient extends InstasentClient
     public function getSms($page = 1, $perPage = 10)
     {
         $query = http_build_query(array('page' => $page, 'per_page' => $perPage));
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/sms/?'.$query : $this->rootEndpoint.'/sms/?'.$query;
+        $url = $this->secureChannel.'/sms/?'.$query;
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
     }

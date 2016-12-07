@@ -24,7 +24,7 @@ class LookupClient extends InstasentClient
      */
     public function doLookup($to)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/lookup/' : $this->rootEndpoint.'/lookup/';
+        $url = $this->secureChannel.'/lookup/';
         $httpMethod = 'POST';
         $data = array('to' => $to);
         
@@ -39,7 +39,7 @@ class LookupClient extends InstasentClient
      */
     public function getLookupById($id)
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/lookup/'.$id : $this->rootEndpoint.'/lookup/'.$id;
+        $url = $this->secureChannel.'/lookup/'.$id;
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
     }
@@ -54,7 +54,7 @@ class LookupClient extends InstasentClient
     public function getLookups($page = 1, $perPage = 10)
     {
         $query = http_build_query(array('page' => $page, 'per_page' => $perPage));
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/lookup/?'.$query : $this->rootEndpoint.'/lookup/?'.$query;
+        $url = $this->secureChannel.'/lookup/?'.$query;
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
     }

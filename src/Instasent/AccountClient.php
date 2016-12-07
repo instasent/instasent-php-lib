@@ -23,7 +23,7 @@ class AccountClient extends InstasentClient
      */
     public function getAccountBalance()
     {
-        $url = ($this->useSecureChannel) ? $this->secureChannel.'/organization/account/' : $this->rootEndpoint.'/organization/account/';
+        $url = $this->secureChannel.'/organization/account/';
         $httpMethod = 'GET';
         return $this->execRequest($url, $httpMethod, array());
     }
