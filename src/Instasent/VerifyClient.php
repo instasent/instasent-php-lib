@@ -16,14 +16,14 @@ use Instasent\Abstracts\InstasentClient;
 class VerifyClient extends InstasentClient
 {
     /**
-     * Request a Verify for a number
+     * Request a Verify for a number.
      *
-     * @param  string $from        Remittent, 11chars max
-     * @param  string $to          Recipient where SMS is delivered, Include the country phone prefix format E164
-     * @param  string $text        Message text content, 160 chars per SMS
-     * @param  string $tokenLength Length of token code. min => 3, max => 8
-     * @param  string $timeout     Time token is valid in seconds. min => 30
-     * @param  string $clientId    An user reference for your internal use, Optional - 40chars max, Unique per Verify
+     * @param string $from        Remittent, 11chars max
+     * @param string $to          Recipient where SMS is delivered, Include the country phone prefix format E164
+     * @param string $text        Message text content, 160 chars per SMS
+     * @param string $tokenLength Length of token code. min => 3, max => 8
+     * @param string $timeout     Time token is valid in seconds. min => 30
+     * @param string $clientId    An user reference for your internal use, Optional - 40chars max, Unique per Verify
      *
      * @return array
      */
@@ -31,7 +31,7 @@ class VerifyClient extends InstasentClient
     {
         $url = $this->secureChannel.'/verify/';
         $httpMethod = 'POST';
-        $data = array('sms' => array('from' => $from, 'to' => $to, 'text' => $text));
+        $data = ['sms' => ['from' => $from, 'to' => $to, 'text' => $text]];
 
         if ($clientId) {
             $data['clientId'] = $clientId;
@@ -49,10 +49,10 @@ class VerifyClient extends InstasentClient
     }
 
     /**
-     * Check a Verify by entity Id and token
+     * Check a Verify by entity Id and token.
      *
-     * @param  string $id
-     * @param  string $token
+     * @param string $id
+     * @param string $token
      *
      * @return array
      */
@@ -61,12 +61,14 @@ class VerifyClient extends InstasentClient
         $url = $this->secureChannel.'/verify/'.$id;
         $url .= '?token='.$token;
         $httpMethod = 'GET';
-        return $this->execRequest($url, $httpMethod, array());
+
+        return $this->execRequest($url, $httpMethod, []);
     }
 
     /**
-     * Get Verify by entity Id
-     * @param  string $id
+     * Get Verify by entity Id.
+     *
+     * @param string $id
      *
      * @return array
      */
@@ -74,22 +76,24 @@ class VerifyClient extends InstasentClient
     {
         $url = $this->secureChannel.'/verify/'.$id;
         $httpMethod = 'GET';
-        return $this->execRequest($url, $httpMethod, array());
+
+        return $this->execRequest($url, $httpMethod, []);
     }
 
     /**
      * Get all verifies. Filter by page and resultes per page.
-     * @param  integer $page
-     * @param  integer $perPage
+     *
+     * @param int $page
+     * @param int $perPage
      *
      * @return array
      */
     public function getVerify($page = 1, $perPage = 10)
     {
-        $query = http_build_query(array('page' => $page, 'per_page' => $perPage));
+        $query = http_build_query(['page' => $page, 'per_page' => $perPage]);
         $url = $this->secureChannel.'/verify/?'.$query;
         $httpMethod = 'GET';
-        return $this->execRequest($url, $httpMethod, array());
-    }
 
+        return $this->execRequest($url, $httpMethod, []);
+    }
 }

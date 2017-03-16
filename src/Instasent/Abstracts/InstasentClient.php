@@ -13,16 +13,15 @@ namespace Instasent\Abstracts;
 
 abstract class InstasentClient
 {
-
     /**
-     * Secure Channel URL
+     * Secure Channel URL.
      *
      * @var string
      */
     protected $secureChannel = 'https://api.instasent.com';
 
     /**
-     * Api Token
+     * Api Token.
      *
      * @var string
      */
@@ -40,23 +39,23 @@ abstract class InstasentClient
     }
 
     /**
-     * Execute the request using curl
+     * Execute the request using curl.
      *
-     * @param  string $url
-     * @param  string $httpMethod
-     * @param  string $data
+     * @param string $url
+     * @param string $httpMethod
+     * @param string $data
      *
      * @return array
      */
     protected function execRequest($url, $httpMethod, $data)
     {
         $curl = curl_init();
-        $headers = array(
+        $headers = [
             'Authorization: Bearer '.$this->token,
             'Accept: application/json',
-        );
+        ];
 
-        curl_setopt($curl,CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
@@ -67,9 +66,9 @@ abstract class InstasentClient
         $body = curl_exec($curl);
         $info = curl_getinfo($curl);
 
-        return array(
-            "response_code" => $info['http_code'],
-            "response_body" => $body,
-        );
+        return [
+            'response_code' => $info['http_code'],
+            'response_body' => $body,
+        ];
     }
 }
