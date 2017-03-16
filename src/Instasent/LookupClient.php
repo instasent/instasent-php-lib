@@ -15,10 +15,10 @@ use Instasent\Abstracts\InstasentClient;
 
 class LookupClient extends InstasentClient
 {
-
     /**
-     * Do a lookup to get number info
-     * @param  string $to       Recipient where lookup is requested
+     * Do a lookup to get number info.
+     *
+     * @param string $to Recipient where lookup is requested
      *
      * @return array
      */
@@ -26,14 +26,15 @@ class LookupClient extends InstasentClient
     {
         $url = $this->secureChannel.'/lookup/';
         $httpMethod = 'POST';
-        $data = array('to' => $to);
-        
+        $data = ['to' => $to];
+
         return $this->execRequest($url, $httpMethod, $data);
     }
 
     /**
-     * Get a lookup by id
-     * @param  string $id
+     * Get a lookup by id.
+     *
+     * @param string $id
      *
      * @return array
      */
@@ -41,21 +42,24 @@ class LookupClient extends InstasentClient
     {
         $url = $this->secureChannel.'/lookup/'.$id;
         $httpMethod = 'GET';
-        return $this->execRequest($url, $httpMethod, array());
+
+        return $this->execRequest($url, $httpMethod, []);
     }
 
     /**
      * Get all lookups. Filter by page and resultes per page.
-     * @param  integer $page 
-     * @param  integer $perPage
+     *
+     * @param int $page
+     * @param int $perPage
      *
      * @return array
      */
     public function getLookups($page = 1, $perPage = 10)
     {
-        $query = http_build_query(array('page' => $page, 'per_page' => $perPage));
+        $query = http_build_query(['page' => $page, 'per_page' => $perPage]);
         $url = $this->secureChannel.'/lookup/?'.$query;
         $httpMethod = 'GET';
-        return $this->execRequest($url, $httpMethod, array());
+
+        return $this->execRequest($url, $httpMethod, []);
     }
 }

@@ -15,9 +15,8 @@ use Instasent\Abstracts\InstasentClient;
 
 class AccountClient extends InstasentClient
 {
-
     /**
-     * Get Account Balance
+     * Get Account Balance.
      *
      * @return array
      */
@@ -25,7 +24,7 @@ class AccountClient extends InstasentClient
     {
         $url = $this->secureChannel.'/organization/account/';
         $httpMethod = 'GET';
-        return $this->execRequest($url, $httpMethod, array());
-    }
 
+        return $this->execRequest($url, $httpMethod, []);
+    }
 }
