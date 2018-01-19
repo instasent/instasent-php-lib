@@ -12,7 +12,8 @@
     }
   ],
   "require": {
-    "php": ">=5.2.1"
+    "php": ">=5.2.1",
+    "ext-curl": "*"
   },
   "autoload": {
     "psr-4": {"Instasent\\": "src/Instasent"}
