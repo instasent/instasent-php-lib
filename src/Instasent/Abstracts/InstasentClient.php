@@ -56,7 +56,7 @@ abstract class InstasentClient
             'Accept: application/json',
         );
 
-        curl_setopt($curl,CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
@@ -64,11 +64,17 @@ abstract class InstasentClient
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
         }
+
         $body = curl_exec($curl);
+
+        if ($body === false) {
+            $body = curl_error($curl);
+        }
+
         $info = curl_getinfo($curl);
 
         return array(
-            "response_code" => $info['http_code'],
+            "response_code" => $info['http_code'] === 0 ? 400 : $info['http_code'],
             "response_body" => $body,
         );
     }
