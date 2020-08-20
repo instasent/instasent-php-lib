@@ -1,18 +1,18 @@
-Welcome to __Instasent PHP SDK__. This repository contains Instasent's PHP SDK and samples for REST API.
+Welcome to **Instasent PHP SDK**. This repository contains PHP SDK for Instasent's REST API.
+
+# Notice!
+
+> **Verify** product is currently deprecated and will be removed in the next release. The same functionality can be easily implemented by sending an SMS. If you need help migrating please contact us
 
 ## Installation
 
-You can install **instasent-php-lib** via composer or by downloading the source.
-
-#### Via Composer:
-
-You need to run:
+The easiest way to install the SDK is either via composer:
 
 ```
-composer require "instasent/instasent-php-lib"
+composer require instasent/instasent-php-lib
 ```
 
-#### Via ZIP file:
+or manually by downloading the source:
 
 [Click here to download the source
 (.zip)](https://github.com/instasent/instasent-php-lib/zipball/master)
@@ -25,240 +25,50 @@ require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
 require_once(__DIR__ . '/path/to/lib/SmsClient.php');
 ```
 
-and now you can use it!
+# Usage
 
-## SMS
+Check the [examples directory](https://github.com/instasent/instasent-php-lib/tree/master/examples) to see working examples of this SDK usage
 
-### Send an SMS
-
-You can check 'examples/send-sms.php' or 'examples/send-sms-unicode.php' file.
-
-#### Composer way
+### Sending an SMS
 
 ```php
-<?php
+$instasentClient = new Instasent\SmsClient('my-token');
+$response = $instasentClient->sendSms('Company', '+34666666666', 'test message');
 
-require __DIR__  . '/../vendor/autoload.php';
-
-$instasentClient = new Instasent\SmsClient("my-token");
-$response = $instasentClient->sendSms("test", "+34647000000", "test message");
-
-echo $response["response_code"];
-echo $response["response_body"];
+echo $response['response_code'];
+echo $response['response_body'];
 ```
 
-#### Direct way
+If you want to send an Unicode SMS (i.e with 😀 emoji) you only need to replace `sendSms` call to `sendUnicodeSms`
 
 ```php
-<?php
-
-require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
-require_once(__DIR__ . '/path/to/lib/SmsClient.php');
-
-$instasentClient = new Instasent\SmsClient("my-token");
-$response = $instasentClient->sendSms("test", "+34647000000", "test message");
-
-echo $response["response_code"];
-echo $response["response_body"];
+$response = $instasentClient->sendUnicodeSms('Company', '+34666666666', 'Unicode test: ña éáíóú 😀');
 ```
 
-If you want to send an Unicode SMS (i.e with 😀 emoji) you only need to replace sendSms method with sendUnicodeSms:
+## Available actions
 
-```php
-$response = $instasentClient->sendUnicodeSms("test", "+34647000000", "Unicode test: ña éáíóú 😀");
+```
+SMS
+SmsClient::sendSms(sender, to, text)
+SmsClient::sendUnicodeSms(sender, to, text)
+SmsClient::getSms(page, per_page)
+SmsClient::getSmsById(message_id)
+
+LOOKUP
+LookupClient::doLookup(to)
+LookupClient::getLookups(page, per_page)
+LookupClient::getLookupById(id)
+
+ACCOUNT
+instasent::getAccountBalance()
 ```
 
-### Send multiple SMS
+# Full documentation
 
-You can check 'examples/send-bulk-sms.php' or 'examples/send-bulk-sms-unicode.php' file.
-
-#### Composer way
-
-```php
-<?php
-
-require __DIR__  . '/../vendor/autoload.php';
-
-$instasentClient = new Instasent\SmsClient("my-token");
-$messages = null;
-for ($i=0; $i<100; $i++) {
-    $messages[] = ["from" => "test", "to" => "+34647000000", "text" => "test multi"];
-}
-
-$response = $instasentClient->sendBulkSms($messages);
-```
-
-#### Direct way
-
-```php
-<?php
-
-require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
-require_once(__DIR__ . '/path/to/lib/SmsClient.php');
-
-$instasentClient = new Instasent\SmsClient("my-token");
-$messages = null;
-for ($i=0; $i<100; $i++) {
-    $messages[] = ["from" => "test", "to" => "+34647000000", "text" => "test multi"];
-}
-
-$response = $instasentClient->sendBulkSms($messages);
-
-echo $response["response_code"];
-echo $response["response_body"];
-```
-
-If you want to send an Unicode Bulk SMS (i.e with 😀 emoji) you only need to add 'allowUnicode' => true to array
-
-```php
-for ($i=0; $i<100; $i++) {
-    $messages[] = ["allowUnicode" => true, "from" => "test", "to" => "+34647000000", "text" => "Unicode test: ña éáíóú 😀"];
-}
-```
-
-### Get SMS Info
-
-#### Composer way
-
-```php
-
-require __DIR__  . '/../vendor/autoload.php';
-
-$instasentClient = new Instasent\SmsClient("my-token");
-$response = $instasentClient->getSmsById("smsId");
-
-echo $response["response_code"];
-echo $response["response_body"];
-```
-
-#### Direct way
-
-```php
-
-require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
-require_once(__DIR__ . '/path/to/lib/SmsClient.php');
-
-$instasentClient = new Instasent\SmsClient("my-token");
-$response = $instasentClient->getSmsById("smsId");
-
-echo $response["response_code"];
-echo $response["response_body"];
-```
-
-## Lookup
-
-### Do a Lookup
-
-#### Composer way
-
-```php
-
-require __DIR__  . '/../vendor/autoload.php';
-
-$instasentClient = new Instasent\LookupClient("my-token");
-$response = $instasentClient->doLookup("+34666000000");
-
-echo $response["response_code"];
-echo $response["response_body"];
-```
-
-#### Direct way
-
-```php
-
-require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
-require_once(__DIR__ . '/path/to/lib/LookupClient.php');
-
-$instasentClient = new Instasent\LookupClient("my-token");
-$response = $instasentClient->doLookup("+34666000000");
-
-echo $response["response_code"];
-echo $response["response_body"];
-```
-
-### Verify
-
-To do a verify workflow, first you need to request a verify code.
-
-### Request Verify
-
-#### Composer way
-
-```php
-
-require __DIR__  . '/../vendor/autoload.php';
-
-$instasentClient = new Instasent\VerifyClient("my-token");
-$response = $instasentClient->requestVerify("test", "+34647000000", "Your code is %token%", 6, 300);
-
-echo $response["response_code"];
-echo $response["response_body"];
-```
-
-#### Direct way
-
-```php
-
-require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
-require_once(__DIR__ . '/path/to/lib/VerifyClient.php');
-
-$instasentClient = new Instasent\VerifyClient("my-token");
-$response = $instasentClient->requestVerify("test", "+34647000000", "Your code is %token%", 6, 300);
-
-echo $response["response_code"];
-echo $response["response_body"];
-```
-
-Then you need to check if verify code entered by your client is correct.
-
-### Check Verify
-
-#### Composer way
-
-```php
-
-require __DIR__  . '/../vendor/autoload.php';
-
-$instasentClient = new Instasent\VerifyClient("my-token");
-$response = $instasentClient->checkVerify($requestVerifyId, $token);
-
-$response_body = json_decode($response["response_body"]);
-$status = $response_body->entity->status;
-
-if ($status == 'verified') {
-    echo "Hooorray!! You are verified!";
-} else {
-    echo "Verified status is: ".$status;
-}
-```
-
-#### Direct way
-
-```php
-
-require_once(__DIR__ . '/path/to/lib/Abstracts/InstasentClient.php');
-require_once(__DIR__ . '/path/to/lib/VerifyClient.php');
-
-$instasentClient = new Instasent\VerifyClient("my-token");
-$response = $instasentClient->checkVerify($requestVerifyId, $token);
-
-$response_body = json_decode($response["response_body"]);
-$status = $response_body->entity->status;
-
-if ($status == 'verified') {
-    echo "Hooorray!! You are verified!";
-} else {
-    echo "Verified status is: ".$status;
-}
-```
-
-## [Full Documentation](http://docs.instasent.com/)
-
-## Prerequisites
-
-* PHP >= 5.2.3
+Full documentation of the API can be found at http://docs.instasent.com/
 
 # Getting help
 
-If you need help installing or using the library, please contact Instasent Support at support@instasent.com first.
-If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
+If you need help installing or using the SDK, please contact Instasent Support at support@instasent.com
+
+If you've instead found a bug in the library or have a feature request, go ahead and open an issue or pull request!
